@@ -1,0 +1,186 @@
+# EMP -MGR RELATIONSHIP :-
+
+#### P1. WAQTD the MANAGER name of SMITH.
+    
+    SELECT ENAME 
+    FROM EMP
+    WHERE EMPNO IN(SELECT MGR
+    FROM EMP
+    WHERE ENAME='SMITH');
+
+#### P2. WAQTD the names of the employees reporting to BLAKE.   
+
+    SELECT ENAME
+    FROM EMP
+    WHERE MGR IN(SELECT EMPNO
+    FROM EMP
+    WHERE ENAME='BLAKE');
+
+#### P3. WAQTD the nanagers's manager name of SMITH.
+
+    
+    SELECT ENAME
+    FROM EMP
+    WHERE EMPNO IN(SELECT MGR 
+    FROM EMP
+    WHERE EMPNO IN(SELECT MGR
+    FROM EMP
+    WHERE ENAME='SMITH'));
+
+#### P4. WAQTD the names of the employees reporting to SMITH'S MANAGER.
+
+    SELECT ENAME
+    FROM EMP
+    WHERE MGR IN(SELECT MGR
+    FROM EMP
+    WHERE ENAME='SMITH');
+
+#### P5. WAQTD the names of the employees reporting to JAMES MANAGER's MANAGER.
+
+    SELECT ENAME
+    FROM EMP
+    WHERE MGR IN(SELECT MGR 
+    FROM EMP
+    WHERE EMPNO IN(SELECT MGR
+    FROM EMP
+    WHERE ENAME='JAMES'));
+
+#### P6. WAQTD the DNAME of the employees reporting to SMITH MANAGER.
+
+    SELECT DNAME
+    FROM DEPT
+    WHERE DEPTNO IN(SELECT DEPTNO
+    FROM EMP
+    WHERE MGR IN(SELECT MGR
+    FROM EMP
+    WHERE ENAME='SMITH'));
+    
+
+---
+
+## Questions :-
+
+#### 43.WAQTD NAME AND HIREDATE OF THE EMPLOYEE HIRED BEFORE ALL THE EMPLOYEES (FIRST EMP)
+
+    SELECT ENAME, HIREDATE
+    FROM EMP
+    WHERE HIREDATE IN(SELECT MIN(HIREDATE)
+    FROM EMP);
+
+#### 44. WAQTD NAME AND HIREDATE OF THE EMPLOYEES HIRED AT THE LAST
+
+    SELECT ENAME, HIREDATE
+    FROM EMP
+    WHERE HIREDATE=(SELECT MAX(HIREDATE)
+    FROM EMP);
+
+#### 45. WAQTD NAME, COMM OF THE EMPLOYEE WHO EARNS MIN COMISSION
+
+    SELECT ENAME,COMM
+    FROM EMP
+    WHERE COMM IN(SELECT MIN(COMM)
+    FROM EMP);
+
+#### 68. WAQTD LOC OF THE EMPLOYEE WHO WAS HIRED FIRST.
+
+    SELECT LOC
+    FROM DEPT
+    WHERE DEPTNO IN(SELECT DEPTNO
+                    FROM EMP
+                    WHERE HIREDATE IN(SELECT MIN(HIREDATE)
+                                      FROM EMP));
+
+#### 69. WAQTD DETAILS OF THE EMPLOYEE EARNING 7TH MINIMUM SALARY
+
+    SELECT *
+    FROM EMP
+    WHERE SAL IN(SELECT MIN(SAL)
+    FROM EMP
+    WHERE SAL IN(SELECT MIN(SAL)
+    FROM EMP
+    WHERE SAL IN(SELECT MIN(SAL)
+    FROM EMP
+    WHERE SAL IN(SELECT MIN(SAL)
+    FROM EMP
+    WHERE SAL IN(SELECT MIN(SAL)
+    FROM EMP
+    WHERE SAL IN(SELECT MIN(SAL)
+    FROM EMP))))));
+    
+
+#### 70. WAQTD DNAME OF EMPLOYEE GETTING 2ND MAXIMUM SALARY
+
+    SELECT DNAME
+    FROM DEPT
+    WHERE DEPTNO IN(SELECT DEPTNO
+        FROM EMP 
+        WHERE SAL IN(SELECT MAX(SAL)
+            FROM EMP
+            WHERE SAL<(SELECT MAX(SAL)
+                        FROM EMP))); 
+
+#### 71.WAQTD SMITHS REPORTING MANAGER'S NAME
+
+    SELECT ENAME
+    FROM EMP
+    WHERE EMPNO IN(SELECT MGR
+                    FROM EMP
+                    WHERE ENAME='SMITH');
+
+#### 72.WAQTD ADAMS MANAGER'S MANAGER NAME
+
+    SELECT ENAME
+    FROM EMP
+    WHERE EMPNO IN(SELECT MGR
+                    FROM EMP
+                    WHERE EMPNO IN(SELECT MGR
+                                    FROM EMP
+                                    WHERE ENAME='ADAMS'));
+
+#### 73.WAQTD DNAME OF JONES MANAGER
+
+    SELECT DNAME
+    FROM DEPT
+    WHERE DEPTNO IN(SELECT DEPTNO
+                    FROM EMP
+                    WHERE EMPNO IN(SELECT MGR 
+                                    FROM EMP
+                                    WHERE ENAME='JONES'));
+
+#### 74.WAQTD MILLER'S MANAGER'S SALARY
+
+    SELECT SAL
+    FROM EMP
+    WHERE EMPNO IN(SELECT MGR 
+                    FROM EMP
+                    WHERE ENAME='MILLER');
+
+#### 75.WAQTD LOC OF SMITH'S MANAGER'S MANAGER
+
+    SELECT LOC
+    FROM DEPT
+    WHERE DEPTNO IN(SELECT DEPTNO
+                    FROM EMP
+                    WHERE EMPNO IN(SELECT MGR
+                                    FROM EMP
+                                    WHERE EMPNO IN(SELECT MGR 
+                                                    FROM EMP
+                                                    WHERE ENAME='SMITH')));
+
+#### 76.WAQTD NAME OF THE EMPLOYEES REPORTING TO BLAKE
+
+    SELECT ENAME
+    FROM EMP
+    WHERE MGR=(SELECT EMPNO
+                    FROM EMP
+                    WHERE ENAME='BLAKE');
+
+#### 80.WAQTD NUMBER OF EMPLOYEES REPORTING TO FORD'S MANAGER   
+
+    SELECT COUNT(*)
+    FROM EMP
+    WHERE MGR IN(SELECT MGR
+                 FROM EMP
+                 WHERE ENAME='FORD');
+
+

@@ -1,0 +1,191 @@
+## RENAME A TABLE
+
+### SYNTAX :- 
+
+
+    ALTER TABLE EMPLOYEE
+    MODIFY DEPT_ID REFERENCES DEPARTMENT(DEPT_ID);
+
+    CREATE TABLE CUSTOMERS(
+    CUSTOMER_ID NUMBER(3) PRIMARY KEY,
+    EMAIL VARCHAR2(50) NOT NULL UNIQUE,
+    AGE NUMBER(3) CHECK(AGE>18),
+    GENDER CHAR(1) CHECK(GENDER IN('M','F','O')));
+
+
+    SELECT *
+    FROM USER_CONSTRAINTS;
+
+    SELECT *
+    FROM USER_CONSTRAINTS
+    WHERE TABLE_NAME=TAB_NAME;
+
+### DDL --> DATA DEFINITION LANGUAGE --> CREATE AN OBJECT ( TABLE ) AND MANIPULATE THE STRUCTURE OF THE OBJECT 
+
+#### CREATE A TABLE 
+
+### SYNTAX 
+
+    CREATE TABLE TAB_NAME ( 
+    COL_NAME 1 DATATYPE CONSTRAINT , 
+    COL_NAME 2 DATATYPE CONSTRAINT , 
+    .
+    .
+    .
+    COL_NAME n DATATYPE CONSTRAINT ) ; 
+
+##  DATATYPES 
+1. CHAR 
+2. VARCHAR 
+3. NUMBER 
+4. DATE 
+
+## CONSTRAINTS 
+1. UNIQUE 
+2. NOT NULL 
+3. CHECK 
+4. PK 
+5. FK 
+6. DEFAULT 
+------------------------------------------------------------------------------
+```
+CREATE A USER 
+
+STEP 1 
+--> LOGIN AS SYSTEM ( DBA ) 
+PWD --> TIGER 
+
+STEP 2 
+--> CREATE USER USER_NAME IDENTIFIED BY PWD ; 
+--> CREATE USER M79 IDENTIFIED BY TIGER ; 
+
+STEP 3 ( GRANT PERMISSIONS ) 
+--> GRANT CONNECT TO M79 
+--> GRANT DBA TO M79 
+--> GRANT CREATE VIEW TO M79 
+--> GRANT CREATE MATERIALIZED VIEW TO M79 
+```
+
+### NOTE -->
+` IF ERROR --> ACCOUNT LOCKED 
+CONNECT -- > SYSTEM `
+
+    ALTER USER USER_NAME ACCOUNT UNLOCK ; 
+    ALTER USER USER_NAME IDENTIFIED BY PWD ; 
+
+
+teams 
+
+    CREATE TABLE TEAMS ( 
+    TID CHAR(3) PRIMARY KEY , 
+    TNAME VARCHAR(5) NOT NULL , 
+    LOC VARCHAR(5) NOT NULL UNIQUE ) ; 
+
+players
+
+    CREATE TABLE PLAYERS 
+    ( PID CHAR(2) PRIMARY KEY , 
+    PNAME VARCHAR(10) NOT NULL , 
+    JERSEY_NO NUMBER(3) NOT NULL , 
+    TID CHAR(3) REFERENCES TEAMS(TID) ) ; 
+
+---------------------------------------------------------------------
+### RENAME A TABLE 
+
+### SYNTAX 
+
+    RENAME TABLE_NAME TO NEW_TABLE_NAME ; 
+
+### TEAMS --> IPL 
+
+    RENAME TEAMS TO IPL ; 
+--------------------------------------------------------------------
+ALTER STATEMENTS --> CHANGE OR MODIFY THE STRUCTURE OF THE TABLE 
+
+## 1. ADD A COLUMN 
+
+### SYNTAX 
+
+    ALTER TABLE TAB_NAME 
+    ADD COLUMN_NAME DATATYPE CONSTRAINT ; 
+
+#### IPL --> COL--> COACH VARCHAR(10) NOT NULL 
+
+    ALTER TABLE IPL 
+    ADD COACH VARCHAR(10) NOT NULL ; 
+
+## 2. DROP A COLUMN 
+
+### SYNTAX 
+
+    ALTER TABLE TAB_NAME 
+    DROP COLUMN COL_NAME ; 
+
+    ALTER TABLE IPL 
+    DROP COLUMN COACH ; 
+
+### 3. MODIFY THE DATATYPE / NULL AND NOT NULL CONSTRAINTS 
+
+    ALTER TABLE TAB_NAME 
+    MODIFY COLUMN_NAME DATATYPE CONSTRAINT ; 
+
+    ALTER TABLE IPL 
+    MODIFY COACH VARCHAR(15) NULL ; 
+
+### 4. RENAME A COLUMN 
+
+    ALTER TABLE TAB_NAME 
+    RENAME COLUMN COL_NAME TO NEW_COL_NAME ; 
+
+#### COACH --> OWNER 
+
+    ALTER TABLE IPL 
+    RENAME COLUMN COACH TO OWNER ; 
+--------------------------------------------------------------------------------------------
+### 4. DROP A TABLE --> DELETE THE TABLE AND MOVE IT TO THE RECYCLE BIN ( DATABASE ) 
+
+### SYNTAX
+
+    DROP TABLE TAB_NAME ; 
+
+    DROP TABLE IPL ; 
+
+
+### 5. FLASHBACK --> IT IS USED TO RESTORE THE TABLE FROM THE RECYCLE BIN 
+
+### SYNTAX 
+
+    FLASHBACK TABLE TAB_NAME 
+    TO BEFORE DROP ; 
+
+    FLASHBACK TABLE PLAYERS 
+    TO BEFORE DROP ; 
+
+
+### NOTE -->
+- TO ACCESS THE RECYCLE BIN 
+
+### COMMANT --> 
+    SELECT * 
+    FROM USER_RECYCLEBIN ; 
+------------------------------------------------------------------------------------------------
+### PURGE --> 
+- IT IS USED TO DELETE THE TABLE PERMANENTLY 
+
+NOTE --> to delete the table permanently it has to dropped first
+
+PURGE TABLE TAB_NAME ; 
+-----------------------------------------------------------------------------------------
+TRUNCATE --> delete all the records of the table permanently 
+
+SYNTAX 
+
+TRUNCATE TABLE TAB_NAME ; 
+------------------------------------------------------------------------------------------
+NOTE --> DDL COMMANDS ARE AUTO COMMIT COMMANDS 
+
+
+TO DROP A USER 
+--> SYSTEM 
+
+DROP USER USER_NAME ; 
